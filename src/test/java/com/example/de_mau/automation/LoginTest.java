@@ -34,6 +34,8 @@ public class LoginTest {
             options.addArguments("--disable-gpu");
             options.addArguments("--no-sandbox");
             options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--window-size=1920,1080");
+
         } else {
             // Nếu chạy local, bạn có thể bật chế độ headless theo nhu cầu
             options.addArguments("--start-maximized");
@@ -43,7 +45,7 @@ public class LoginTest {
         // options.addArguments("--user-data-dir=/tmp/chrome-profile-" + System.currentTimeMillis());
 
         driver = new ChromeDriver(options);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
 
     @Test
