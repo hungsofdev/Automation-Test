@@ -51,6 +51,10 @@ public class RegistrationTest {
         // Mở trang chủ
         driver.get("https://vitimex.com.vn/");
 
+        // Click vào biểu tượng để hiển thị modal đăng nhập/đăng ký
+        WebElement modalIcon = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.li_log a[data-bs-target='#ModalLogin']")));
+        modalIcon.click();
+
         // Tìm và click link "Đăng ký" (giả định)
         WebElement registerLink = wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng ký tài khoản mới")));
         registerLink.click();
