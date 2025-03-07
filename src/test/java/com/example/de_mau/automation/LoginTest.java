@@ -21,9 +21,27 @@ public class LoginTest {
 
     @BeforeEach
     public void setUp() {
-        System.setProperty("webdriver.coccoc.driver", "C:/WebDriver/bin/chromedriver-win64/chromedriver-win64/chromedriver.exe"); // Thay đổi đường dẫn nếu cần
+        // Nếu chạy trên Windows local với Cốc Cốc/Chrome, đặt property cho ChromeDriver
+        if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+            // Thiết lập đường dẫn đến ChromeDriver
+            System.setProperty("webdriver.coccoc.driver", "C:/WebDriver/bin/chromedriver-win64/chromedriver-win64/chromedriver.exe"); // Thay đổi đường dẫn nếu cần
+        }
+
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--start-maximized");
+        // Nếu chạy trong môi trường CI (ví dụ GitHub Actions), bật chế độ headless
+        if (System.getenv("CI") != null) {
+            options.addArguments("--headless");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+        } else {
+            // Nếu chạy local, bạn có thể bật chế độ headless theo nhu cầu
+            options.addArguments("--start-maximized");
+        }
+
+        // Nếu vẫn gặp lỗi liên quan đến user data directory, hãy thêm dòng sau để tạo một thư mục tạm thời riêng:
+        // options.addArguments("--user-data-dir=/tmp/chrome-profile-" + System.currentTimeMillis());
+
         driver = new ChromeDriver(options);
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
